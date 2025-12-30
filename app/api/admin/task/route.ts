@@ -3,7 +3,6 @@ import { auth } from "@/middleware/auth";
 import { roleGuard } from "@/middleware/role";
 import { NextResponse } from "next/server";
 
-
 export const runtime = "nodejs";
 
 export async function GET(req: Request) {
@@ -11,21 +10,22 @@ export async function GET(req: Request) {
   roleGuard(user, ["admin"]);
 
   const db = await connectDB();
-  const users = await db
-    .collection<User>("users")
-    .find({}, { projection: { password: 0 } })
-    .toArray();
+  const tasks = await db.collection<Task>("tasks").find({}).toArray();
 
-  return NextResponse.json({ users });
+  return NextResponse.json({ tasks });
 }
 
 // Types
-interface User {
+interface Task {
   _id: string;
-  name: string;
-  email: string;
-  role: "admin" | "client" | "tasker";
-  status?: "active" | "banned";
+  title: string;
+  description: string;
+  category: string;
+  location: string;
+  budget: number;
+  status: string;
+  clientId: string;
+  taskerId?: string;
   createdAt: Date;
   [key: string]: any;
 }
