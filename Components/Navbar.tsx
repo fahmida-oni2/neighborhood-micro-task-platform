@@ -25,8 +25,8 @@ console.log(session)
 
     // User dropdown links
     const userLinks = [
-        { href: '/profile', label: 'Profile', icon: '👤' },
-        { href: '/dashboard', label: 'Dashboard', icon: '📊' },
+        { href: '/client/dashboard/profile', label: 'Profile', icon: '👤' },
+        { href: '/client/dashboard', label: 'Dashboard', icon: '📊' },
     ];
 
     return (

@@ -5,7 +5,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'static.thenounproject.com',
-        pathname: '/**',
+        // pathname: '/**',
       },
       {
         protocol: 'https',
