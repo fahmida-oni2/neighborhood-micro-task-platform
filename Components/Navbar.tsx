@@ -11,7 +11,7 @@ const Navbar = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     
     const isActive = (path: string) => pathname?.startsWith(path);
-console.log(session)
+// console.log(session)
     // Close mobile menu on route change
     useEffect(() => setIsMobileMenuOpen(false), [pathname]);
 

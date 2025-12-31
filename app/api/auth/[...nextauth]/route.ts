@@ -21,7 +21,7 @@ const handler = NextAuth({
 
           // Connect to MongoDB
           const client = await clientPromise;
-          const db = client.db("your-database-name");
+          const db = client.db("micro-platform");
           const usersCollection = db.collection("users");
 
           // Find user by email

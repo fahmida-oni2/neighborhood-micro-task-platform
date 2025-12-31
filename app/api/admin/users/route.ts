@@ -24,7 +24,7 @@ interface User {
   _id: string;
   name: string;
   email: string;
-  role: "admin" | "client" | "tasker";
+  role: "admin" | "user" | "tasker";
   status?: "active" | "banned";
   createdAt: Date;
   [key: string]: any;

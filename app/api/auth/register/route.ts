@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
 
     // Connect to MongoDB
     const client = await clientPromise;
-    const db = client.db("your-database-name");
+    const db = client.db("micro-platform");
     const usersCollection = db.collection("users");
 
     // Check if user exists

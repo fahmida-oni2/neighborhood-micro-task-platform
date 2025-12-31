@@ -86,6 +86,7 @@ const navItems = [
   { label: "My Tasks", href: "/client/dashboard/tasks", icon: <IconTasks /> },
   { label: "Notifications", href: "/client/dashboard/notifications", icon: <IconBell /> },
   { label: "Profile", href: "/client/dashboard/profile", icon: <IconUser /> },
+    { label: "User-manage", href: "/client/dashboard/user-management", icon: <IconUser /> },
 ];
 
 export default function Sidebar() {
