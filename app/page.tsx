@@ -1,12 +1,17 @@
+import CategoriesSection from "@/Components/CategoriesSection";
+import FeaturedTasksSection from "@/Components/FeaturedTasksSection";
+import HeroSection from "@/Components/HeroSection";
+import HowItWorksSection from "@/Components/HowItWorksSection";
 
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-       <div className="text-center text-5xl font-bold">
-        Welcome to micro task platform
-       </div>
+    <div className="flex min-h-screen items-center justify-center bg-[#edffe3] font-sans dark:bg-black">
+      <main className="w-11/12 mx-auto">
+       <HeroSection></HeroSection>
+       <HowItWorksSection></HowItWorksSection>
+       <FeaturedTasksSection></FeaturedTasksSection>
+       <CategoriesSection></CategoriesSection>
       </main>
     </div>
   );
