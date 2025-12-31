@@ -97,9 +97,9 @@ export default function PostTaskPage() {
                     className="textarea textarea-bordered min-h-32"
                     placeholder="Explain the task details clearly..."
                   />
-                  <p className="text-xs opacity-70 mt-2">
+                  {/* <p className="text-xs opacity-70 mt-2">
                     Mention tools needed, exact address area, and expected time.
-                  </p>
+                  </p> */}
                 </div>
 
                 <div className="form-control">
@@ -107,9 +107,9 @@ export default function PostTaskPage() {
                     <span className="label-text font-medium pb-2">Images (optional)</span>
                   </label>
                   <input type="file" className="file-input file-input-bordered w-full" />
-                  <p className="text-xs opacity-70 mt-2">
+                  {/* <p className="text-xs opacity-70 mt-2">
                     Add photos if it helps taskers understand faster.
-                  </p>
+                  </p> */}
                 </div>
               </div>
             </div>

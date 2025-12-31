@@ -90,9 +90,9 @@ export default function ClientProfilePage() {
                 type="file"
                 className="file-input file-input-bordered h-12"
               />
-              <p className="text-xs opacity-60 mt-1">
+              {/* <p className="text-xs opacity-60 mt-1">
                 Optional. You can update this anytime.
-              </p>
+              </p> */}
             </div>
 
             {/* Actions */}
