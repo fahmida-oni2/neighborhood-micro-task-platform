@@ -12,9 +12,12 @@ interface AnnouncementPayload {
 }
 
 export async function POST(req: Request) {
-  const user = auth(req);
-  roleGuard(user, ["admin"]);
+  const user = await auth();
 
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  roleGuard(user, ["admin"]);
   const body: AnnouncementPayload = await req.json();
   const db = await connectDB();
 

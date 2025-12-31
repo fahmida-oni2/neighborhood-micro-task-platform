@@ -41,14 +41,13 @@ export default function UserManagementPage() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-bold text-primary">User Management</h1>
-          <button className="btn btn-primary">Add New User</button>
         </div>
 
         {/* Stats Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="stat bg-white shadow rounded-box">
             <div className="stat-title">Total Users</div>
-            <div className="stat-value text-primary">1,240</div>
+            <div className="stat-value text-primary">{users.length}</div>
             <div className="stat-desc">21% more than last month</div>
           </div>
           <div className="stat bg-white shadow rounded-box">
@@ -78,7 +77,7 @@ export default function UserManagementPage() {
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user.id} className="hover">
+                <tr key={user._id} className="hover">
                   <td>
                     <div className="flex items-center gap-3">
                       <div className="avatar placeholder">

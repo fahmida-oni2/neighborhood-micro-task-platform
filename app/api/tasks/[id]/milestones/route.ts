@@ -3,16 +3,17 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-interface Params {
-  params: { id: string };
+interface Context {
+  params: Promise<{ id: string }>;
 }
 
 // GET milestones for a task
-export async function GET(req: Request, { params }: Params) {
+export async function GET(req: Request, context: Context) {
+  const { id } = await context.params;
   const db = await connectDB();
   const milestones = await db
     .collection("milestones")
-    .find({ taskId: params.id })
+    .find({ taskId: id })
     .toArray();
   return NextResponse.json({ milestones });
 }

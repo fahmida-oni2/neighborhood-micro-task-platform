@@ -5,19 +5,19 @@ import { connectDB } from "@/app/lib/dbConnect";
 
 export const runtime = "nodejs";
 
-interface Params {
-  params: { id: string };
+interface Context {
+  params: Promise<{ id: string }>;
 }
 
 // GET reviews of a user
-export async function GET(req: Request, { params }: Params) {
+export async function GET(req: Request, context: Context) {
   auth(req); // optional: only logged-in users can see
 
   const db = await connectDB();
-
+const { id } = await context.params;
   const reviews = await db
     .collection<Review>("reviews")
-    .find({ userId: params.id })
+    .find({ userId: id })
     .sort({ createdAt: -1 })
     .toArray();
 

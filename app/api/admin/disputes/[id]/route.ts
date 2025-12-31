@@ -6,8 +6,8 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-interface Params {
-  params: { id: string };
+interface Context {
+  params: Promise<{ id: string }>;
 }
 
 interface DisputePayload {
@@ -15,15 +15,16 @@ interface DisputePayload {
   resolution: string;
 }
 
-export async function PUT(req: Request, { params }: Params) {
+export async function PUT(req: Request, context: Context) {
   const user = auth(req);
   roleGuard(user, ["admin"]);
 
+ const { id } = await context.params;
   const body: DisputePayload = await req.json();
   const db = await connectDB();
 
   await db.collection<Dispute>("disputes").updateOne(
-    { _id: params.id },
+    { _id: id },
     {
       $set: {
         status: body.status,

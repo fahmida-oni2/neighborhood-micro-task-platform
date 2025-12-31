@@ -6,23 +6,24 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-interface Params {
-  params: { id: string };
+interface Context {
+  params: Promise<{ id: string }>;
 }
 
 interface VerifyPayload {
   badge: string; // verifiedID | topRated | backgroundCheck
 }
 
-export async function PUT(req: Request, { params }: Params) {
+export async function PUT(req: Request, context: Context) {
   const user = auth(req);
   roleGuard(user, ["admin"]);
 
+  const { id } = await context.params;
   const body: VerifyPayload = await req.json();
   const db = await connectDB();
 
   await db.collection("users").updateOne(
-    { id: params.id },
+    { id: id },
     { $set: { [body.badge]: true } }
   );
 
