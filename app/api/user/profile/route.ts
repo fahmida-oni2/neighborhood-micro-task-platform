@@ -6,7 +6,10 @@ export const runtime = "nodejs";
 
 // GET user profile
 export async function GET(req: Request) {
-  const user = auth(req); // tasker or client
+  const user = await auth();
+  if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
   const db = await connectDB();
 
   const profile = await db.collection<User>("users").findOne(
@@ -21,7 +24,11 @@ export async function GET(req: Request) {
 
 // PUT update profile
 export async function PUT(req: Request) {
-  const user = auth(req);
+ const user = await auth();
+
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
   const db = await connectDB();
 
   const body: UpdateProfilePayload = await req.json();

@@ -30,9 +30,7 @@ const Navbar = () => {
     const userLinks = [
         { href: '/client/dashboard/profile', label: 'Profile', icon: '👤' },
         { href: '/client/dashboard', label: 'Dashboard', icon: '📊' },
-        { href: '/profile', label: 'Profile', icon: '👤' },
-        { href: '/dashboard', label: 'Dashboard', icon: '📊' },
-        { href: '/tasks/my-tasks', label: 'My Tasks', icon: '✅' },
+        { href: '/client/dashboard/tasks', label: 'My Tasks', icon: '✅' },
         { href: '/earnings', label: 'Earnings', icon: '💰' },
     ];
 

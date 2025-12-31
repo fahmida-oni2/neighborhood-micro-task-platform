@@ -11,7 +11,11 @@ interface Context {
 
 // GET reviews of a user
 export async function GET(req: Request, context: Context) {
-  auth(req); // optional: only logged-in users can see
+const user = await auth();
+
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
   const db = await connectDB();
 const { id } = await context.params;

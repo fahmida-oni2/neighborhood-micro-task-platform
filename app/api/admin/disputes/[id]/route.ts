@@ -16,9 +16,12 @@ interface DisputePayload {
 }
 
 export async function PUT(req: Request, context: Context) {
-  const user = auth(req);
-  roleGuard(user, ["admin"]);
+ const user = await auth();
 
+  roleGuard(user, ["admin"]);
+if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
  const { id } = await context.params;
   const body: DisputePayload = await req.json();
   const db = await connectDB();

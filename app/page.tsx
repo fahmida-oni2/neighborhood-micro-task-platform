@@ -1,8 +1,7 @@
-import CategoriesSection from "@/Components/CategoriesSection";
-import FeaturedTasksSection from "@/Components/FeaturedTasksSection";
-import HeroSection from "@/Components/HeroSection";
-import HowItWorksSection from "@/Components/HowItWorksSection";
-
+import CategoriesSection from "@/components/CategoriesSection";
+import FeaturedTasksSection from "@/components/FeaturedTasksSection";
+import HeroSection from "@/components/HeroSection";
+import HowItWorksSection from "@/components/HowItWorksSection";
 
 export default function Home() {
   return (

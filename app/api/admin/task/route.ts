@@ -6,7 +6,10 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 export async function GET(req: Request) {
-  const user = auth(req);
+  const user = await auth();
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
   roleGuard(user, ["admin"]);
 
   const db = await connectDB();

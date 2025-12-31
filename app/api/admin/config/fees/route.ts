@@ -6,7 +6,10 @@ import { roleGuard } from "@/middleware/role";
 import { NextResponse } from "next/server";
 
 export async function PATCH(req: Request) {
-  const user = auth(req);
+  const user = await auth();
+  if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
   roleGuard(user, ["admin"]);
 
   const { commission } = await req.json(); // e.g., 0.1 for 10%

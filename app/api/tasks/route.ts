@@ -27,7 +27,11 @@ export async function GET() {
 
 // POST create new task
 export async function POST(req: Request) {
-  const user = auth(req);
+ const user = await auth();
+
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
   const db = await connectDB();
 
   const body: Task = await req.json();

@@ -15,7 +15,11 @@ interface VerifyPayload {
 }
 
 export async function PUT(req: Request, context: Context) {
-  const user = auth(req);
+  const user = await auth();
+
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
   roleGuard(user, ["admin"]);
 
   const { id } = await context.params;
