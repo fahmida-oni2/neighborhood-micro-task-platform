@@ -1,98 +1,98 @@
+// app/api/auth/[...nextauth]/route.ts
 import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { userDB } from "@/lib/db";
 import bcrypt from "bcryptjs";
-import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 
-const handler = NextAuth({
-  providers: [
-    CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials: any) {
-        try {
-          // Check credentials
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error("Email and password required");
-          }
+export const authOptions = {
+    providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+        }),
+        CredentialsProvider({
+            name: "credentials",
+            credentials: {
+                email: { label: "Email", type: "email" },
+                password: { label: "Password", type: "password" }
+            },
+            async authorize(credentials) {
+                if (!credentials?.email || !credentials?.password) {
+                    throw new Error("Please enter email and password");
+                }
 
-          // Connect to MongoDB
-          const client = await clientPromise;
-          const db = client.db("your-database-name");
-          const usersCollection = db.collection("users");
+                const user = await userDB.findByEmail(credentials.email);
 
-          // Find user by email
-          const user = await usersCollection.findOne({
-            email: credentials.email.toLowerCase()
-          });
+                if (!user) {
+                    throw new Error("No user found with this email");
+                }
 
-          if (!user) {
-            throw new Error("No user found");
-          }
+                // Check if user has password (Google users don't)
+                if (!user.password) {
+                    throw new Error("Please sign in with Google");
+                }
 
-          // Verify password
-          const isPasswordValid = await bcrypt.compare(
-            credentials.password,
-            user.password
-          );
+                const isValid = await bcrypt.compare(credentials.password, user.password);
 
-          if (!isPasswordValid) {
-            throw new Error("Invalid password");
-          }
+                if (!isValid) {
+                    throw new Error("Invalid password");
+                }
 
-          // Return user object
-          return {
-            id: user._id.toString(),
-            name: user.name,
-            email: user.email,
-            image: user.image || null,
-            role: user.role || "user"
-          };
-
-        } catch (error) {
-          console.error("Authorize error:", error);
-          return null;
+                return {
+                    id: user._id!.toString(),
+                    name: user.name,
+                    email: user.email,
+                    image: user.photo || '',
+                    role: user.role,
+                };
+            }
+        })
+    ],
+    callbacks: {
+        async signIn({ user, account }: { user: any; account: any }) {
+            if (account.provider === "google") {
+                try {
+                    const dbUser = await userDB.findOrCreateGoogleUser({
+                        email: user.email!,
+                        name: user.name!,
+                        image: user.image,
+                    });
+                    
+                    user.id = dbUser._id!.toString();
+                    user.role = dbUser.role;
+                } catch (error) {
+                    console.error("Error in Google sign-in:", error);
+                    return false;
+                }
+            }
+            return true;
+        },
+        async jwt({ token, user }: { token: any; user: any }) {
+            if (user) {
+                token.id = user.id;
+                token.role = user.role;
+            }
+            return token;
+        },
+        async session({ session, token }: { session: any; token: any }) {
+            if (session?.user) {
+                session.user.id = token.id;
+                session.user.role = token.role;
+            }
+            return session;
         }
-      }
-    })
-  ],
-
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-      }
-      return token;
     },
+    pages: {
+        signIn: "/login",
+        error: "/login",
+    },
+    session: {
+        strategy: "jwt",
+    },
+    secret: process.env.NEXTAUTH_SECRET,
+};
 
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as string;
-      }
-      return session;
-    }
-  },
-
-  pages: {
-    signIn: "/login",
-    signOut: "/",
-    error: "/login",
-    newUser: "/register"
-  },
-
-  session: {
-    strategy: "jwt",
-    maxAge: 30 * 24 * 60 * 60, // 30 days
-  },
-
-  debug: process.env.NODE_ENV === "development",
-
-  secret: process.env.NEXTAUTH_SECRET,
-});
-
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

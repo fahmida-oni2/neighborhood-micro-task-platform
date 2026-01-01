@@ -178,7 +178,6 @@ export default function FeaturedTasksSection() {
                                     {/* Price & Rating */}
                                     <div className="flex justify-between items-center">
                                         <div className="flex items-center gap-2">
-                                            <IndianRupee className="w-5 h-5 text-[#1A3609]" />
                                             <span className="text-2xl font-bold text-[#1A3609]">{task.price}</span>
                                             <span className="text-sm text-[#1A3609]/60">/task</span>
                                         </div>
