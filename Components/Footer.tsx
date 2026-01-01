@@ -68,9 +68,8 @@ export default function Footer() {
     ];
 
     const cities = [
-        'Delhi', 'Mumbai', 'Bangalore', 'Chennai', 'Kolkata',
-        'Hyderabad', 'Pune', 'Ahmedabad', 'Jaipur', 'Lucknow',
-        'Chandigarh', 'Bhopal', 'Indore', 'Patna', 'Guwahati'
+        'Dhaka', 'Chattogram', 'Khulna', 'Rajshahi', 'Rangpur',
+        'Barishal', 'Sylhet', 'Mymensingh',
     ];
 
     return (
@@ -253,7 +252,7 @@ export default function Footer() {
 
                 {/* Cities Section */}
                 <div className="mb-8">
-                    <h3 className="text-lg font-semibold mb-6 text-center">Available in Cities Across India</h3>
+                    <h3 className="text-lg font-semibold mb-6 text-center">Available in Cities Across Bangladesh</h3>
                     <div className="flex flex-wrap justify-center gap-3">
                         {cities.map((city, index) => (
                             <motion.span
@@ -283,7 +282,7 @@ export default function Footer() {
                             <div>
                                 <div className="text-sm text-[#D0EBC0]/60">Email</div>
                                 <a href="mailto:support@neighborgig.com" className="hover:text-[#D0EBC0] transition-colors">
-                                    support@neighborgig.com
+                                    007shojibkhan@gmail.com
                                 </a>
                             </div>
                         </div>
@@ -292,7 +291,7 @@ export default function Footer() {
                             <div>
                                 <div className="text-sm text-[#D0EBC0]/60">Phone</div>
                                 <a href="tel:+911800123456" className="hover:text-[#D0EBC0] transition-colors">
-                                    +91 1800 123 456
+                                    +8801734470868
                                 </a>
                             </div>
                         </div>
@@ -300,7 +299,7 @@ export default function Footer() {
                             <MapPin className="w-5 h-5 text-[#D0EBC0]" />
                             <div>
                                 <div className="text-sm text-[#D0EBC0]/60">Office</div>
-                                <span>Bangalore, India</span>
+                                <span>Rajshahi, Bangladesh</span>
                             </div>
                         </div>
                     </div>
