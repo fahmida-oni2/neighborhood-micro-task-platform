@@ -4,7 +4,6 @@ import { usePathname } from 'next/navigation';
 import { useSession, signOut } from "next-auth/react";
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
-// Remove this line: import logo from './logo.png'
 
 const Navbar = () => {
     const { data: session } = useSession();
@@ -13,7 +12,7 @@ const Navbar = () => {
 
     const isActive = (path: string) => pathname?.startsWith(path);
 // console.log(session)
-    console.log(session);
+    // console.log(session);
 
     // Close mobile menu on route change
     useEffect(() => setIsMobileMenuOpen(false), [pathname]);
@@ -57,9 +56,10 @@ const Navbar = () => {
                         <Link href="/" className="flex items-center gap-2">
                             <div className="relative w-10 h-10">
                                 <Image
-                                    src="/logo.png" // Direct path from public folder
+                                    src="/logo.png" 
                                     alt="NeighborGig Logo"
                                     fill
+                                    sizes="32px"
                                     className="object-contain"
                                     priority
                                 />

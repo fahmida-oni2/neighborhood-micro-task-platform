@@ -5,7 +5,7 @@ interface User {
   _id: string;
   name: string;
   email: string;
- role: "admin" | "user" | "tasker";
+ role: "admin" | "client" | "tasker";
   status: 'Active' | 'banned';
  createdAt: string;
   [key: string]: any;

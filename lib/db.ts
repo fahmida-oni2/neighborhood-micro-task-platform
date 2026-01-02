@@ -3,7 +3,7 @@ import { Db, MongoClient, ObjectId } from 'mongodb';
 import clientPromise from './mongodb';
 
 // Database and Collection Names
-const DB_NAME = process.env.MONGODB_DB || 'neighborgig';
+const DB_NAME = process.env.MONGODB_DB || 'micro-platform';
 const USERS_COLLECTION = 'users';
 
 // User Interface
@@ -13,7 +13,7 @@ export interface IUser {
     email: string;
     password?: string;
     photo?: string;
-    role: 'user' | 'tasker' | 'client' | 'admin';
+    role: 'client'| 'tasker' | 'admin';
     provider: 'credentials' | 'google';
     verified: boolean;
     location?: string;
@@ -100,7 +100,7 @@ export const userDB = {
             name: googleUser.name,
             email: googleUser.email,
             photo: googleUser.image || '',
-            role: 'user',
+            role: 'client',
             provider: 'google',
             verified: true,
             skills: [],

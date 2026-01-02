@@ -12,7 +12,7 @@ export default function Footer() {
         e.preventDefault();
         if (email) {
             // Here you would typically make an API call
-            console.log('Subscribed:', email);
+            // console.log('Subscribed:', email);
             setSubscribed(true);
             setEmail('');
             setTimeout(() => setSubscribed(false), 3000);
@@ -282,7 +282,7 @@ export default function Footer() {
                             <div>
                                 <div className="text-sm text-[#D0EBC0]/60">Email</div>
                                 <a href="mailto:support@neighborgig.com" className="hover:text-[#D0EBC0] transition-colors">
-                                    007shojibkhan@gmail.com
+                                    neighborgig@gmail.com
                                 </a>
                             </div>
                         </div>
@@ -299,7 +299,7 @@ export default function Footer() {
                             <MapPin className="w-5 h-5 text-[#D0EBC0]" />
                             <div>
                                 <div className="text-sm text-[#D0EBC0]/60">Office</div>
-                                <span>Rajshahi, Bangladesh</span>
+                                <span>Dhaka, Bangladesh</span>
                             </div>
                         </div>
                     </div>

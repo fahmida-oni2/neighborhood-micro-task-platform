@@ -1,19 +1,20 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/middleware/auth";
 import { connectDB } from "@/app/lib/dbConnect";
+import { ObjectId } from "mongodb";
 
 export const runtime = "nodejs";
 
 // GET user profile
 export async function GET(req: Request) {
   const user = await auth();
-  if (!user) {
+  if (!user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
   const db = await connectDB();
 
   const profile = await db.collection<User>("users").findOne(
-    { _id: user.id },
+    { _id: new ObjectId(user.id)},
     { projection: { password: 0 } } // hide password
   );
 
@@ -26,28 +27,25 @@ export async function GET(req: Request) {
 export async function PUT(req: Request) {
  const user = await auth();
 
-    if (!user) {
+    if (!user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
   const db = await connectDB();
 
-  const body: UpdateProfilePayload = await req.json();
+  const body = await req.json();
 
-  const updateFields: Partial<User> = {};
-
+const updateFields: any = {};
   if (body.name) updateFields.name = body.name;
-  if (body.location) updateFields.location = body.location;
-  if (body.skills) updateFields.skills = body.skills;
-  if (body.profilePhoto) updateFields.profilePhoto = body.profilePhoto;
-  if (body.serviceArea) updateFields.serviceArea = body.serviceArea;
-
+  if (body.location !== undefined) updateFields.location = body.location;
+  if (Array.isArray(body.skills)) updateFields.skills = body.skills;
+  if (body.photo) updateFields.photo = body.photo;
   await db.collection<User>("users").updateOne(
-    { _id: user.id },
-    { $set: updateFields }
+    { _id: new ObjectId(user.id) },
+    { $set: { ...updateFields, updatedAt: new Date() } }
   );
 
   const updatedProfile = await db.collection<User>("users").findOne(
-    { _id: user.id },
+    { _id: new ObjectId(user.id) },
     { projection: { password: 0 } }
   );
 
@@ -56,9 +54,10 @@ export async function PUT(req: Request) {
 
 // Types
 interface User {
-  _id: string;
+  _id: ObjectId | string;
   name: string;
   email: string;
+  photo: string;
   role: "client" | "tasker" | "admin";
   location?: string;
   skills?: string[];
@@ -68,10 +67,3 @@ interface User {
   [key: string]: any;
 }
 
-interface UpdateProfilePayload {
-  name?: string;
-  location?: string;
-  skills?: string[];
-  profilePhoto?: string;
-  serviceArea?: string;
-}

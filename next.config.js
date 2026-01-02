@@ -5,7 +5,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'static.thenounproject.com',
-        // pathname: '/**',
+        pathname: '/**',
       },
       {
         protocol: 'https',
@@ -38,6 +38,16 @@ const nextConfig = {
         pathname: '/**',
       },
       // ✅ এখানে নতুন add করুন
+      {
+        protocol: 'https',
+        hostname: 'ui-avatars.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+        port: '',
+        pathname: '/**', // This allows all paths from this host
+      },
       {
         protocol: 'https',
         hostname: 'i.ibb.co.com',

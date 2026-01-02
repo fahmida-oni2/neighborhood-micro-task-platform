@@ -8,7 +8,7 @@ export default function Topbar() {
           ☰
         </label>
 
-        <Brand title="Client Dashboard" />
+        <Brand title=" Dashboard" />
       </div>
 
       <div className="navbar-end flex items-center gap-2">
@@ -17,9 +17,7 @@ export default function Topbar() {
         </button>
 
         <div className="dropdown dropdown-end">
-          <div tabIndex={0} role="button" className="btn bg-primary text-base-200 hover:bg-base-200 hover:text-primary rounded-full">
-            Profile
-          </div>
+       
           <ul
             tabIndex={0}
             className="menu dropdown-content bg-base-100 rounded-box shadow mt-3 w-52 p-2"

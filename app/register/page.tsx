@@ -13,7 +13,7 @@ const RegisterPage = () => {
         password: '',
         confirmPassword: '',
         photo: '',
-        role: 'user', // Default role
+        role: 'client', // Default role
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);

@@ -1,33 +1,10 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-// app/api/auth/[...nextauth]/route.ts
-import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { userDB } from "@/lib/db";
 import bcrypt from "bcryptjs";
-import { ObjectId } from "mongodb";
 
 export const authOptions: NextAuthOptions = {
-  providers: [
-    CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" }
-      },
-      async authorize(credentials: any) {
-        try {
-          // Check credentials
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error("Email and password required");
-          }
-
-          // Connect to MongoDB
-          const client = await clientPromise;
-          const db = client.db("micro-platform");
-          const usersCollection = db.collection("users");
-export const authOptions = {
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -105,24 +82,6 @@ export const authOptions = {
             return session;
         }
     },
-    pages: {
-        signIn: "/login",
-        error: "/login",
-    },
-    session: {
-        strategy: "jwt",
-    },
-    secret: process.env.NEXTAUTH_SECRET,
-};
-
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as string;
-      }
-      return session;
-    }
-  },
 
   pages: {
     signIn: "/login",
